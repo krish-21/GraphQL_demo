@@ -15,13 +15,17 @@ const Header = () => {
       <Link to="/">Feed</Link>
       <span>|</span>
 
+      <Link to="/search">Search</Link>
+      <span>|</span>
+
       {isLoggedIn && <Link to="/create">Create</Link>}
       <span>|</span>
 
       {isLoggedIn && <Logout />}
-      <span>|</span>
 
       {!isLoggedIn && <Link to="/auth">login</Link>}
+
+      <hr />
     </div>
   );
 };

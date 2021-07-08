@@ -4,9 +4,10 @@ import { Switch, Route, Redirect } from "react-router";
 import AuthContext from "../store/auth-context";
 
 import Layout from "./Layout/Layout";
+import Auth from "./Auth/Auth";
 import LinkList from "./Links/LinkList";
 import CreateLink from "./Links/CreateLink";
-import Auth from "./Auth/Auth";
+import SearchLink from "./Links/SearchLink";
 
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -16,6 +17,10 @@ function App() {
       <Switch>
         <Route exact path="/">
           <LinkList />
+        </Route>
+
+        <Route exact path="/search">
+          <SearchLink />
         </Route>
 
         <Route exact path="/auth">
