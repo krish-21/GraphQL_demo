@@ -1,17 +1,9 @@
 import { useState } from "react";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router";
 
-const CREATE_LINK_MUTATION = gql`
-  mutation createLinkMutation($description: String!, $url: String!) {
-    createLink(description: $description, url: $url) {
-      id
-      createdAt
-      url
-      description
-    }
-  }
-`;
+import { CREATE_LINK_MUTATION } from "../../gqlQueries/mutations";
+import { FEED_QUERY } from "../../gqlQueries/queries";
 
 const CreateLink = () => {
   const [urlInputValue, setUrlInputValue] = useState("");
@@ -23,6 +15,23 @@ const CreateLink = () => {
     variables: {
       url: urlInputValue.trim(),
       description: descriptionInputValue.trim(),
+    },
+    update: (cache, { data: { createLink } }) => {
+      // extract feed from cache
+      const { feed } = cache.readQuery({
+        query: FEED_QUERY,
+      });
+
+      console.log(feed.links);
+
+      cache.writeQuery({
+        query: FEED_QUERY,
+        data: {
+          feed: {
+            links: [createLink, ...feed.links],
+          },
+        },
+      });
     },
     onCompleted: () => history.push("/"),
     onError: ({ message }) => console.log(message),

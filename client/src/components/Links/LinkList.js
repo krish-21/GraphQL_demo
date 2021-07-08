@@ -1,42 +1,38 @@
-import { useQuery, gql } from "@apollo/client";
+import { useContext } from "react";
+import { useQuery } from "@apollo/client";
+
+import AuthContext from "../../store/auth-context";
+import { FEED_QUERY } from "../../gqlQueries/queries";
 
 import Link from "./Link";
 
-const FEED_QUERY = gql`
-  query feedQuery {
-    feed {
-      id
-      links {
-        id
-        createdAt
-        url
-        description
-      }
-      count
-    }
-  }
-`;
-
 const LinkList = () => {
   const { data } = useQuery(FEED_QUERY);
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
-    <div>
+    <>
       {data && (
         <>
           <h3>{data.feed.count}</h3>
-          <div>
-            {data.feed.links.map((link) => (
+          <>
+            {data.feed.links.map((link, index) => (
               <Link
                 key={link.id}
+                id={link.id}
+                index={index}
                 url={link.url}
                 description={link.description}
+                createdAt={link.createdAt}
+                postedBy={link.postedBy}
+                votes={link.votes}
+                isLoggedIn={isLoggedIn}
               />
             ))}
-          </div>
+          </>
         </>
       )}
-    </div>
+    </>
   );
 };
 

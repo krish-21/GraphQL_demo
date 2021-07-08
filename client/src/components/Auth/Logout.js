@@ -12,7 +12,7 @@ const Logout = () => {
 
   useEffect(() => {
     return () => {
-      console.log("RESETTING STORE!!!!");
+      console.log("Clearing STORE!!!!");
       client.clearStore();
     };
   }, []);
