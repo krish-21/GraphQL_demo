@@ -1,18 +1,12 @@
 import { useContext } from "react";
-import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
 import AuthContext from "../../store/auth-context";
 
+import Logout from "../Auth/Logout";
+
 const Header = () => {
-  const history = useHistory();
-
-  const { isLoggedIn, logout } = useContext(AuthContext);
-
-  const handleLogout = () => {
-    logout();
-    history.push(`/`);
-  };
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <div>
@@ -24,7 +18,7 @@ const Header = () => {
       {isLoggedIn && <Link to="/create">Create</Link>}
       <span>|</span>
 
-      {isLoggedIn && <div onClick={handleLogout}>logout</div>}
+      {isLoggedIn && <Logout />}
       <span>|</span>
 
       {!isLoggedIn && <Link to="/auth">login</Link>}
