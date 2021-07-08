@@ -1,35 +1,23 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { ApolloProvider } from "@apollo/client";
 
 import "./index.css";
 
+import { AuthContextProvider } from "./store/auth-context";
+import client from "./utils/apolloClient";
 import App from "./components/App";
-
-// Import dependecies from Apollo Client
-import {
-  ApolloProvider,
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-} from "@apollo/client";
-
-// http link to connect GraphQL client with GraphQL API
-const httpLink = createHttpLink({ uri: "http://localhost:4000" });
-
-// instantiate client
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-});
 
 ReactDOM.render(
   <StrictMode>
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <App />
-      </ApolloProvider>
-    </BrowserRouter>
+    <AuthContextProvider>
+      <BrowserRouter>
+        <ApolloProvider client={client}>
+          <App />
+        </ApolloProvider>
+      </BrowserRouter>
+    </AuthContextProvider>
   </StrictMode>,
   document.getElementById("root")
 );

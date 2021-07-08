@@ -1,20 +1,36 @@
-import { Switch, Route } from "react-router";
+import { useContext } from "react";
+import { Switch, Route, Redirect } from "react-router";
 
-import Header from "./UI/Header";
+import AuthContext from "../store/auth-context";
+
+import Layout from "./Layout/Layout";
 import LinkList from "./Links/LinkList";
 import CreateLink from "./Links/CreateLink";
+import Auth from "./Auth/Auth";
 
 function App() {
+  const { isLoggedIn } = useContext(AuthContext);
+
   return (
-    <div>
-      <Header />
-      <div>
-        <Switch>
-          <Route exact path="/" component={LinkList} />
-          <Route exact path="/create" component={CreateLink} />
-        </Switch>
-      </div>
-    </div>
+    <Layout>
+      <Switch>
+        <Route exact path="/">
+          <LinkList />
+        </Route>
+
+        <Route exact path="/auth">
+          {isLoggedIn ? <Redirect to="/" /> : <Auth />}
+        </Route>
+
+        <Route exact path="/create">
+          {isLoggedIn ? <CreateLink /> : <Redirect to="/auth" />}
+        </Route>
+
+        <Route path="*">
+          <Redirect to="/" />
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 

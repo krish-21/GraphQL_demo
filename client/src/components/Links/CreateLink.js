@@ -28,16 +28,16 @@ const CreateLink = () => {
     onError: ({ message }) => console.log(message),
   });
 
-  const handleUrlInputChange = (e) => {
-    setUrlInputValue(e.target.value);
+  const handleUrlInputChange = (event) => {
+    setUrlInputValue(event.target.value);
   };
 
-  const handleDescriptionInputChange = (e) => {
-    setDescriptionInputValue(e.target.value);
+  const handleDescriptionInputChange = (event) => {
+    setDescriptionInputValue(event.target.value);
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
 
     if (
       urlInputValue.trim().length === 0 ||
