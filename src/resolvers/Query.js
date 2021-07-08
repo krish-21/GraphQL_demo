@@ -33,7 +33,11 @@ const feed = async (parent, args, context) => {
 
   const count = await context.prisma.link.count();
 
-  return { links: filteredLinks, count };
+  return {
+    id: "main-feed",
+    links: filteredLinks,
+    count,
+  };
 };
 
 /**
