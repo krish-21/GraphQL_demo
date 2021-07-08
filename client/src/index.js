@@ -1,7 +1,10 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+
 import "./index.css";
-import App from "./App";
+
+import App from "./components/App";
 
 // Import dependecies from Apollo Client
 import {
@@ -22,9 +25,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </BrowserRouter>
   </StrictMode>,
   document.getElementById("root")
 );
